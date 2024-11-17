@@ -24,6 +24,9 @@ class StartingTile(EffectTile):
     def __init__(self):
         super().__init__("Départ")
 
+    def RunEffect(self):
+        return
+
 class Parc(EffectTile):
     def __init__(self):
         super().__init__("Parc gratuit")
@@ -41,14 +44,14 @@ class Prison(Tile):
         super().__init__("Prison")
 
 class Property(Tile, ABC):
-    def __init__(self, name: str = "PROPERTY_NAME", price: int = 0, rent: int = 0, owner: "Player" = None):
+    def __init__(self, name: str = "PROPERTY_NAME", price: int = 0, rent: int = 0, owner = None):
         super().__init__(name)
         self.price = price
         self.rent = rent
         self.owner = owner
 
 class Terrain(Property):
-    def __init__(self, name: str= "TERRAIN_NAME", rent: int = 0, owner: "Player" = None, price: int = 0, per_house_price: int = 0, block: str = "BLOCK_NAME"):
+    def __init__(self, name: str= "TERRAIN_NAME", rent: int = 0, owner = None, price: int = 0, per_house_price: int = 0, block: str = "BLOCK_NAME"):
         super().__init__(name, rent, owner, price)
         self.houses_count = 0
         self.per_house_price = per_house_price
@@ -61,11 +64,11 @@ class Terrain(Property):
         self.houses_count -= 1
 
 class Station(Property):
-    def __init__(self, name: str = "STATION_NAME", rent: int = 0, owner: "Player" = None, price: int = 0):
+    def __init__(self, name: str = "STATION_NAME", rent: int = 0, owner = None, price: int = 0):
         super().__init__(name, rent, owner, price)
 
 class PublicService(Property):
-    def __init__(self, name: str= "PUBLICSERVICE_NAME", rent: int = 0, owner: "Player" = None, price: int = 0):
+    def __init__(self, name: str= "PUBLICSERVICE_NAME", rent: int = 0, owner = None, price: int = 0):
         super().__init__(name, rent, owner, price)
         
 BLOCKS = {f"{i}":[Terrain(block = f"{i}")]*(3 if i not in {0, 7} else 2) for i in range(8)}

@@ -1,4 +1,4 @@
-from Tile import BLOCKS
+from Classes.Tile import BLOCKS
 from random import randint
 
 class GameManager:
@@ -10,15 +10,15 @@ class GameManager:
     ######################################
 
     @classmethod
-    def add_money(cls, player: "Player", amount: int):
+    def add_money(cls, player, amount: int):
         player.money += amount
 
     @classmethod
-    def remove_money(cls, player: "Player", amount: int):
+    def remove_money(cls, player, amount: int):
         player.money -= amount
 
     @classmethod
-    def pay_rent(cls, player1: "Player", player2: "Player", amount:int):
+    def pay_rent(cls, player1, player2, amount:int):
         cls.remove_money(player1, amount)
         cls.add_money(player2, amount)
 
@@ -27,33 +27,33 @@ class GameManager:
     ############################################
 
     @classmethod
-    def get_density(cls, terrains: list["Terrain"]):
+    def get_density(cls, terrains):
         return max(terrain.houses_count for terrain in terrains)
     
     @classmethod
-    def add_property(cls, player: "Player", property: "Property"):
+    def add_property(cls, player, property):
         if not property in player.properties:
             player.properties.append(property)
 
     @classmethod
-    def remove_property(cls, player: "Player", property: "Property"):
+    def remove_property(cls, player, property):
         if property in player.properties:
             player.properties.remove(property)
     
     @classmethod
-    def buy_property(cls, player: "Player", property: "Property"):
+    def buy_property(cls, player, property):
         if not player.lap_count > 0: return
         if property.owner == None and player.money >= property.price:
             cls.add_property(player, property)
             cls.remove_money(player, property.price)
 
     @classmethod
-    def sell_property(cls, player: "Player", property: "Property"):
+    def sell_property(cls, player, property):
         cls.add_money(player, int(0.8*property.price))
         cls.remove_property(player, property)
 
     @classmethod
-    def buy_house(cls, player: "Player", terrain: "Terrain"):
+    def buy_house(cls, player, terrain):
         if not player.owns_block(terrain.block): return
         block_density = cls.get_density(BLOCKS[terrain.block])
         if terrain.houses_count == block_density:
@@ -64,7 +64,7 @@ class GameManager:
             terrain.build_house()
 
     @classmethod
-    def sell_house(cls, player: "Player", terrain : "Terrain"):
+    def sell_house(cls, player, terrain):
         if not player.owns_property(terrain) or terrain.houses_count == 0: return
         block_density = cls.get_density(BLOCKS[terrain.block])
         if terrain.houses_count < block_density: return
@@ -80,6 +80,6 @@ class GameManager:
         return (randint(1,6),randint(1,6))
     
     @classmethod
-    def move_player(cls, player: "Player", displacement: int):
+    def move_player(cls, player, displacement: int):
         player.position = (player.position + displacement) % 40
         player.lap_count += (player.position + displacement) // 40
