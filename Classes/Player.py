@@ -1,8 +1,8 @@
-from Tile import BLOCKS
+from Classes.Tile import BLOCKS
 
 
 class Player:
-    def __init__(self, game : "Game"):
+    def __init__(self, game):
         self.game = game
         self.position = 0
         self.lap_count = 0
@@ -10,7 +10,7 @@ class Player:
         self.cards = []
         self.money = 0
 
-    def owns_property(self, property: "Property") -> bool:
+    def owns_property(self, property) -> bool:
         return property in self.properties
 
     def owns_block(self, block) -> bool:
