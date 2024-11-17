@@ -68,12 +68,15 @@ classDiagram
 	EffectTile <|-- StartingTile
 	EffectTile <|-- Park
 	EffectTile <|-- Arrest
+	EffectTile : +run_effect()
 
 	class Player {
 		+position
 		+list properties
 		+list cards
 		+int money
+		+owsn_property(property)
+		+owns_block(block)
 	}
 	class Board {
 		+list tiles
@@ -87,7 +90,17 @@ classDiagram
 		+list[Player] players
 		+gameManager
 	}
-
+	class GameManager {
+		+get_density(terrains)
+		+add_money(player, amount)
+		+remove_money(player, amount)
+		+add_property(player, property)
+		+remove_property(player, property)
+		+buy_property(player, property)
+		+sell_property(player, property)
+		+buy_house(player, terrain)
+		+sell_house(player, terrain)
+	}
 ```
 
 [^1]: [Monopoly - Wikipedia](https://fr.wikipedia.org/wiki/Monopoly)
