@@ -1,7 +1,4 @@
-from Player import Player
 from abc import ABC, abstractmethod
-
-BLOCKS = {f"{i}":[Terrain(block = f"{i}")]*(3 if i not in {0, 7} else 2) for i in range(8)}
 
 class Tile(ABC):
     def __init__(self, name: str = "TILE_NAME"):
@@ -44,14 +41,14 @@ class Prison(Tile):
         super().__init__("Prison")
 
 class Property(Tile, ABC):
-    def __init__(self, name: str = "PROPERTY_NAME", price: int = 0, rent: list = [], owner: Player = None):
+    def __init__(self, name: str = "PROPERTY_NAME", price: int = 0, rent: int = 0, owner: "Player" = None):
         super().__init__(name)
         self.price = price
         self.rent = rent
         self.owner = owner
 
 class Terrain(Property):
-    def __init__(self, name: str= "TERRAIN_NAME", rent: list = [], owner: Player = None, price: int = 0, per_house_price: int = 0, block: str = "BLOCK_NAME"):
+    def __init__(self, name: str= "TERRAIN_NAME", rent: int = 0, owner: "Player" = None, price: int = 0, per_house_price: int = 0, block: str = "BLOCK_NAME"):
         super().__init__(name, rent, owner, price)
         self.houses_count = 0
         self.per_house_price = per_house_price
@@ -64,14 +61,14 @@ class Terrain(Property):
         self.houses_count -= 1
 
 class Station(Property):
-    def __init__(self, name: str = "STATION_NAME", rent: list = [], owner: Player = None, price: int = 0):
+    def __init__(self, name: str = "STATION_NAME", rent: int = 0, owner: "Player" = None, price: int = 0):
         super().__init__(name, rent, owner, price)
 
 class PublicService(Property):
-    def __init__(self, name: str= "PUBLICSERVICE_NAME", rent: list = [], owner: Player = None, price: int = 0):
+    def __init__(self, name: str= "PUBLICSERVICE_NAME", rent: int = 0, owner: "Player" = None, price: int = 0):
         super().__init__(name, rent, owner, price)
         
-
+BLOCKS = {f"{i}":[Terrain(block = f"{i}")]*(3 if i not in {0, 7} else 2) for i in range(8)}
 
 GYMNASE_EDF = Terrain("GYMNASE_EDF", [2,10,30,90,160,250], None, 60, 50, "BOUYGUES")
 MUSEE = Terrain("MUSEE", [4,20,60,180,320,450], None, 60, 50, "BOUYGUES")
