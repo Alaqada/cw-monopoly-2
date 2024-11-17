@@ -7,6 +7,4 @@ class Board():
         tiles[0] = Tile.StartingTile()
 
         self.tiles = tiles
-    
-    def get_block_height(self, block):
-        pass
+

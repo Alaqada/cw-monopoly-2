@@ -1,5 +1,6 @@
 from Player import Player
 from Tile import Property, Terrain, BLOCKS
+from random import randint
 
 class GameManager:
     def __init__(self, board = None):
@@ -17,6 +18,11 @@ class GameManager:
     def remove_money(cls, player: Player, amount: int):
         player.money -= amount
 
+    @classmethod
+    def pay_rent(cls, player1: Player, player2: Player, amount:int):
+        cls.remove_money(player1, amount)
+        cls.add_money(player2, amount)
+
     ############################################
     #### methodes concernant les proprietes ####
     ############################################
@@ -27,14 +33,17 @@ class GameManager:
     
     @classmethod
     def add_property(cls, player: Player, property: Property):
-        player.properties.append(property)
+        if not property in player.properties:
+            player.properties.append(property)
 
     @classmethod
     def remove_property(cls, player: Player, property: Property):
-        player.properties.remove(property)
+        if property in player.properties:
+            player.properties.remove(property)
     
     @classmethod
     def buy_property(cls, player: Player, property: Property):
+        if not player.lap_count > 0: return
         if property.owner == None and player.money >= property.price:
             cls.add_property(player, property)
             cls.remove_money(player, property.price)
@@ -61,11 +70,16 @@ class GameManager:
         block_density = cls.get_density(BLOCKS[terrain.block])
         if terrain.houses_count < block_density: return
         terrain.destroy_house()
+        cls.add_money(player, int(0.5*terrain.per_house_price))
 
     ##############################################
     #### methodes concernant les deplacements ####
     ##############################################
 
+    @classmethod
+    def get_dices(cls):
+        return (randint(1,6),randint(1,6))
+    
     @classmethod
     def move_player(cls, player: Player, displacement: int):
         player.position = (player.position + displacement) % 40
