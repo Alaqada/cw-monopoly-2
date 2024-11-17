@@ -48,14 +48,12 @@ class Prison(Tile):
 
 class Property(Tile, ABC):
     def __init__(self, name: str = "PROPERTY_NAME", price: int = 0, rent: int = 0, owner = None):
-    def __init__(self, name: str = "PROPERTY_NAME", price: int = 0, rent: int = 0, owner = None):
         super().__init__(name)
         self.price = price
         self.rent = rent
         self.owner = owner
 
 class Terrain(Property):
-    def __init__(self, name: str= "TERRAIN_NAME", rent: int = 0, owner = None, price: int = 0, per_house_price: int = 0, block: str = "BLOCK_NAME"):
     def __init__(self, name: str= "TERRAIN_NAME", rent: int = 0, owner = None, price: int = 0, per_house_price: int = 0, block: str = "BLOCK_NAME"):
         super().__init__(name, rent, owner, price)
         self.houses_count = 0
@@ -69,7 +67,6 @@ class Terrain(Property):
         self.houses_count -= 1
 
 class Station(Property):
-    def __init__(self, name: str = "STATION_NAME", rent: int = 0, owner = None, price: int = 0):
     def __init__(self, name: str = "STATION_NAME", rent: int = 0, owner = None, price: int = 0):
         super().__init__(name, rent, owner, price)
 
