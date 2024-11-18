@@ -1,9 +1,21 @@
 from Classes.Tile import BLOCKS
+from Classes.Player import Player
 from random import randint
 
 class GameManager:
-    def __init__(self, board = None):
-        self.board = board
+    def __init__(self, game):
+        self.game = game
+
+    def game_has_ended(self):
+        pass
+    
+    @classmethod
+    def ask_player_for_name(cls):
+        return input("What is your name ? ")
+    
+    def add_player(self):
+        name = self.ask_player_for_name()
+        self.game.players.append(Player(name))
     
     ######################################
     #### methodes concernant l'argent ####
@@ -76,7 +88,7 @@ class GameManager:
     ##############################################
 
     @classmethod
-    def get_dices(cls):
+    def roll_dices(cls):
         return (randint(1,6),randint(1,6))
     
     @classmethod

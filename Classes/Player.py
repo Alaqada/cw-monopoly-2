@@ -8,7 +8,7 @@ class Player:
         self.lap_count = 0
         self.properties = []
         self.cards = []
-        self.money = 0
+        self.money = 2000
 
     def owns_property(self, property) -> bool:
         return property in self.properties
@@ -17,3 +17,6 @@ class Player:
         for property in BLOCKS[block]:
             if not self.owns_property(property): return False
         return True
+    
+    def is_bankrupt(self):
+        pass
